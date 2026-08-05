@@ -1,5 +1,5 @@
 import { ConflictException, Injectable, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import { UsersService} from '../users/users.service'
 import { RegisterDto } from './dto/register.dto';
 import bcrypt from "bcrypt";
 import { ConfigService } from '@nestjs/config';
@@ -35,6 +35,7 @@ export class AuthService {
             id: response.id,
             name:response.name,
             email:response.email,
+            role:response.role,
             createdAt: response.createdAt,
             updatedAt:response.updatedAt
         }
@@ -53,7 +54,8 @@ export class AuthService {
         const jwt = this.jwtService.sign({
             sub: user.id,
             email: user.email,
-            name: user.name
+            name: user.name,
+            role:user.role
         })
         return jwt;
     }
