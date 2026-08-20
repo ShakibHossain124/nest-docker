@@ -26,4 +26,21 @@ model User{
   role UserRole @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken{
+  id Int @id @default(autoincrement())
+  hashedToken String @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  deviceName String?
+  ipAddress String?
+  userAgent String?
+
+  userId Int
+
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
 }
